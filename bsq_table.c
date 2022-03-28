@@ -1,42 +1,5 @@
 #include "bsq.h"
 
-int	ft_strlen(char *str)
-{
-	int	ans;
-
-	ans = 0;
-	while (*str++)
-		ans += 1;
-	return (ans);
-}
-
-char *ft_strcpy(char *dest, char *src)
-{
-	int i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int	in_charset(char *charset, char c)
-{
-	int	i;
-
-	i = -1;
-	while (charset[++i])
-	{
-		if (charset[i] == c)
-			return (1);
-	}
-	return (0);
-}
-
 char	*ft_getline(int fd, char *symbol)
 {
 	static char	line[1024];
@@ -69,7 +32,7 @@ char	*ft_getline(int fd, char *symbol)
 
 int	get_symbol(int fd, char *symbol)
 {
-	char	*line;//[1024];
+	char	*line;
 	int	i;
 	int	y;
 	
@@ -133,7 +96,7 @@ char	**get_map(char **map, int fd, char *symbol)
 	return (map);
 }
 
-void print(char **map)
+void print_map(char **map)
 {
 	int	i;
 
@@ -143,52 +106,4 @@ void print(char **map)
 		printf("%s\n", map[i]);
 		i += 1;
 	}
-}
-
-int	process(char **map, int fd)
-{
-	t_obstale *list;
-	char	symbol[4];
-	char	*line;
-
-	list = NULL;
-	map = get_map(map, fd, symbol);
-	if (!map)
-		return (0);
-	line = ft_getline(fd, NULL);
-	if (line && ft_strlen(line) != 0)
-	{
-		return (0);
-	}
-	ft_start(map, list, symbol);
-	print(map);
-	return (1);
-}
-
-int main(int argc, char *argv[])
-{
-	int	i;
-	int	res;
-	int	fd;
-	char	**map;
-
-	i = 1;
-	if (argc > 1)
-	{
-		while (i < argc)
-		{
-			fd = open (argv[i], O_RDONLY, 0);
-			if (fd > 0)
-			{
-				res = process(map, fd);
-				if (!res)
-					write(1, "map error\n", 10);
-				close (fd);
-			}
-			i++;
-		}
-	}
-	// else
-		//standard input
-	return (0);
 }

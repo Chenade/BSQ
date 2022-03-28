@@ -99,8 +99,3 @@ t_squr    *ft_start(char **map, t_obstale *list, char *sep)
     printf("WORKED\n\n");
     return  (max);
 }
-
-// int main()
-// {
-//     return (0);
-// }

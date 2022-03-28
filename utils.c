@@ -1,5 +1,29 @@
 #include "bsq.h"
 
+int	ft_strlen(char *str)
+{
+	int	ans;
+
+	ans = 0;
+	while (*str++)
+		ans += 1;
+	return (ans);
+}
+
+char *ft_strcpy(char *dest, char *src)
+{
+	int i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 int	ft_atoi(char *str)
 {
 	int	ans;
@@ -22,4 +46,17 @@ int	ft_atoi(char *str)
 		i += 1;
 	}
 	return (ans * is_neg);
+}
+
+int	in_charset(char *charset, char c)
+{
+	int	i;
+
+	i = -1;
+	while (charset[++i])
+	{
+		if (charset[i] == c)
+			return (1);
+	}
+	return (0);
 }
