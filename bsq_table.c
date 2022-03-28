@@ -2,12 +2,12 @@
 
 int	ft_strlen(char *str)
 {
-	int	i;
+	int	ans;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	ans = 0;
+	while (*str++)
+		ans += 1;
+	return (ans);
 }
 
 char *ft_strcpy(char *dest, char *src)
