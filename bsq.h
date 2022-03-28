@@ -23,15 +23,17 @@ struct s_obstale {
 };
 
 //main
-int	process(char **map, int fd);
+int	        process(char **map, int fd);
+void        print_map(char **map);
 //bsq_table
-char	*ft_getline(int fd, char *symbol);
-int	get_symbol(int fd, char *symbol);
-int	fill_map(char **map, int y, int fd, char *symbol);
-char	**get_map(char **map, int fd, char *symbol);
-void print_map(char **map);
+int         check_symbol(char *line, char *symbol, char c, int *x);
+char	    *ft_getline(int fd, char *symbol);
+int	        get_symbol(int fd, char *symbol);
+int	        fill_map(char **map, int size_y, int fd, char *symbol);
+char	    **get_map(char **map, int fd, char *symbol);
 //init
 t_squr      *set_squr(int posX, int posY, int len);
+t_obstale   *find_obstale(char **map, char *symbol);
 //solve
 int         check_obstale(char **map, int posX, int posY, char *sep);
 int         check_squr(char **map, t_squr *squr, char *sep);

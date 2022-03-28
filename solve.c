@@ -92,10 +92,11 @@ t_squr    *ft_start(char **map, t_obstale *list, char *sep)
     while (list)
     {
         cur_max = find_squr(map, list, sep);
-        if ((cur_max->len) > (max->len))
+        if ((cur_max->len) >= (max->len))
             max = set_squr(cur_max->posX, cur_max->posY, cur_max->len);
         list = list->next;
     }
-    printf("WORKED\n\n");
+    printf("WORKED");
+    printf("max : posX -> %d, posY -> %d, len -> %d,\n\n", max->posX, max->posY, max->len);
     return  (max);
 }

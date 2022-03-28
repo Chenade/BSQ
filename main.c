@@ -3,6 +3,7 @@
 int	process(char **map, int fd)
 {
 	t_obstale *list;
+    t_squr  *max;
 	char	symbol[4];
 	char	*line;
 
@@ -15,9 +16,22 @@ int	process(char **map, int fd)
 	{
 		return (0);
 	}
-	ft_start(map, list, symbol);
+    list = find_obstale(map, symbol);
+	max = ft_start(map, list, symbol);
 	print_map(map);
 	return (1);
+}
+
+void print_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while(map[i])
+	{
+		printf("%s\n", map[i]);
+		i += 1;
+	}
 }
 
 int main(int argc, char *argv[])
