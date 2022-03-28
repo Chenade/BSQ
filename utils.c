@@ -1,4 +1,4 @@
-#include "rush.c"
+#include "bsq.h"
 
 int	ft_atoi(char *str)
 {

@@ -1,6 +1,10 @@
 #ifndef BSQ_H
 # define BSQ_H
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
 
 typedef struct s_squr t_squr;
@@ -24,4 +28,5 @@ int         check_squr(char **map, t_squr *squr, char *sep);
 int         get_square(char **map, int posX, int posY, char *sep);
 t_squr      *find_squr(char **map, t_obstale *list, char *sep);
 t_squr      *ft_start(char **map, t_obstale *list, char *sep);
+int	        ft_atoi(char *str);
 #endif

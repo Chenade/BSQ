@@ -1,3 +1,5 @@
+#include "bsq.h"
+
 int	ft_strlen(char *str)
 {
 	int	i;
@@ -35,7 +37,7 @@ int	in_charset(char *charset, char c)
 	return (0);
 }
 
-char	*get_line(int fd, char *symbol)
+char	*ft_getline(int fd, char *symbol)
 {
 	static char	line[1024];
 	char		c[1];
@@ -60,6 +62,7 @@ char	*get_line(int fd, char *symbol)
 				line[x] = symbol[1];
 				x = 1;
 			}
+		}
 		line[x++] = c[0];
 	}
 	return (line);
@@ -67,18 +70,18 @@ char	*get_line(int fd, char *symbol)
 
 int	get_symbol(int fd, char *symbol)
 {
-	char	ilne[1024];
+	char	*line;//[1024];
 	int	i;
 	int	y;
 	
 	i = -1;
 	y = 0;
-	line = get_line(fd, NULL);
+	line = ft_getline(fd, NULL);
 	while (line[y])
 		y++;
 	while (++i < 3)
 	{
-		symbol[i] =line[y - i];
+		symbol[i] = line[y - i];
 		line[y - i] = 0;
 	}
 	return (ft_atoi(line));
@@ -116,10 +119,10 @@ int	get_map(char **map, int fd, char *symbol)
 	size_x = ft_strlen(line) + 1;
 	while (++i < size_y)
 		map[i] = (char *)malloc(size_x + 1);
-	map[y] = NULL;
+	map[i] = NULL;
 	i = -1;
 	while (++i < size_x)
-		ft_strcpy((char *)map[0][i],(char *)symbol[1]);
+		map[0][i] = symbol[1];
 	ft_strcpy(map[1], line);
 	i = 1;
 	while (++i < size_y)
@@ -128,17 +131,21 @@ int	get_map(char **map, int fd, char *symbol)
 	return (1);
 }
 
+void print()
+{
+	printf("WORKED");
+}
+
 int	process(char **map, int fd)
 {
-	t_obstle *list;
+	t_obstale *list;
 	char	symbol[3];
 
 	get_map(map, fd, symbol);
-	if (get_line(fd, NULL) != NULL)
+	if (ft_getline(fd, NULL) != NULL)
 		return (0);
-	ft_start(map, list, symbol);
+	// ft_start(map, list, symbol);
 	print();
-
 	return (1);
 }
 
@@ -165,7 +172,7 @@ int main(int argc, char *argv[])
 			i++;
 		}
 	}
-	else
+	// else
 		//standard input
 	return (0);
 }
