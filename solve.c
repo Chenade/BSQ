@@ -26,9 +26,9 @@ int get_square(char **map, int posX, int posY, char *sep)
     return (ans);
 }
 
-squr    *set_max(int posX, int posY, int len)
+t_squr    *set_max(int posX, int posY, int len)
 {
-    squr    *max;
+    t_squr    *max;
 
     max->len = len;
     max->posX = posX;
@@ -36,9 +36,9 @@ squr    *set_max(int posX, int posY, int len)
     return (max);
 }
 
-squr    *find_squr(char **map, t_list *list, char *sep)
+t_squr    *find_squr(char **map, t_obstale *list, char *sep)
 {
-    squr max;
+    t_squr *max;
     int len;
     int posX;
     int posY;
@@ -48,17 +48,17 @@ squr    *find_squr(char **map, t_list *list, char *sep)
     posY = list->posY;
     len = get_square(map, posX + 1, posY + 1, sep);
     if (len > max->len)
-        max = set_max(posX + 1, posY + 1);
+        max = set_max(posX + 1, posY + 1, len);
     len = get_square(map, posX + 1, posY, sep);
     if (len > max->len)
-        max = set_max(posX + 1, posY);
+        max = set_max(posX + 1, posY, len);
     len = get_square(map, posX, posY + 1, sep);
     if (len > max->len)
-        max = set_max(posX, posY + 1);
+        max = set_max(posX, posY + 1, len);
     return (max);
 }
 
-squr    *ft_start(char **map, t_list *list, char *sep)
+t_squr    *ft_start(char **map, t_obstale *list, char *sep)
 {
     t_squr *max;
     t_squr *cur_max;
@@ -67,9 +67,14 @@ squr    *ft_start(char **map, t_list *list, char *sep)
     while (list)
     {
         cur_max = find_squr(map, list, sep);
-        if ((cur_max->len) > (max->max))
+        if ((cur_max->len) > (max->len))
             max = set_max(cur_max->posX, cur_max->posY, cur_max->len);
         list = list->next;
     }
     return  (max);
+}
+
+int main()
+{
+    return (0);
 }

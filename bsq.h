@@ -19,7 +19,7 @@ struct s_obstale {
 };
 
 int     get_square(char **map, int posX, int posY, char *sep);
-squr    *set_max(int posX, int posY, int len);
-squr    *find_squr(char **map, t_list *list, char *sep);
-squr    *ft_start(char **map, t_list *list, char *sep);
+t_squr    *set_max(int posX, int posY, int len);
+t_squr    *find_squr(char **map, t_obstale *list, char *sep);
+t_squr    *ft_start(char **map, t_obstale *list, char *sep);
 #endif
