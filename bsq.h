@@ -35,10 +35,10 @@ char	    **get_map(char **map, int fd, char *symbol);
 t_squr      *set_squr(int posX, int posY, int len);
 t_obstale   *find_obstale(char **map, char *symbol);
 //solve
-int         check_obstale(char **map, int posX, int posY, char *sep);
-int         check_squr(char **map, t_squr *squr, char *sep);
-int         get_square(char **map, int posX, int posY, char *sep);
-t_squr      *find_squr(char **map, t_obstale *list, char *sep);
+int         check_obstale(char **map, t_squr *check, char *sep, t_obstale *max_corner);
+t_squr      *find_squr(char **map, t_obstale *list, char *sep, t_obstale *max_corner);
+int         get_square(char **map, t_squr *start_pos, char *sep, t_obstale *max_corner);
+int         check_squr(char **map, t_squr *squr, char *sep, t_obstale *max_corner);
 t_squr      *ft_start(char **map, t_obstale *list, char *sep);
 //utils.c
 int	        ft_atoi(char *str);
