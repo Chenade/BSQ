@@ -18,18 +18,30 @@ int	process(char **map, int fd)
 	}
     list = find_obstale(map, symbol);
 	max = ft_start(map, list, symbol);
-	print_map(map);
+	print_map(map, max, symbol);
 	return (1);
 }
 
-void print_map(char **map)
+void print_map(char **map, t_squr *max, char *symbol)
 {
 	int	i;
+    int x;
+    int y;
 
+    x = max->posX;
+    y = max->posY;
 	i = 0;
+    j = 0;
 	while(map[i])
 	{
-		printf("%s\n", map[i]);
+        j = 0;
+        while (map[j])
+        {
+            if (i >= x && i <= x + max->len && j >= y && j <= y + max->len)
+                    write (1, symbol[0], 1);
+            write (1, map[i][j], 1);
+            j += 1;
+        }
 		i += 1;
 	}
 }

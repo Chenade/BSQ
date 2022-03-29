@@ -102,7 +102,5 @@ t_squr    *ft_start(char **map, t_obstale *list, char *sep)
             max = set_squr(cur_max->posX, cur_max->posY, cur_max->len);
         list = list->next;
     }
-    printf("WORKED");
-    printf("max : posX -> %d, posY -> %d, len -> %d,\n\n", max->posX, max->posY, max->len);
     return  (max);
 }
