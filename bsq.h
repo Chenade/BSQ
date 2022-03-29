@@ -24,7 +24,7 @@ struct s_obstale {
 
 //main
 int	        process(char **map, int fd);
-void        print_map(char **map);
+void        print_map(char **map, t_squr *max, char *symbol);
 //bsq_table
 int         check_symbol(char *line, char *symbol, char c, int *x);
 char	    *ft_getline(int fd, char *symbol);

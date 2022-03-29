@@ -25,24 +25,26 @@ int	process(char **map, int fd)
 void print_map(char **map, t_squr *max, char *symbol)
 {
 	int	i;
+	int	j;
     int x;
     int y;
 
     x = max->posX;
     y = max->posY;
-	i = 0;
-    j = 0;
+	i = 1;
 	while(map[i])
 	{
-        j = 0;
-        while (map[j])
+		j = 1;
+        while (map[i][j])
         {
-            if (i >= x && i <= x + max->len && j >= y && j <= y + max->len)
-                    write (1, symbol[0], 1);
-            write (1, map[i][j], 1);
+            if (i > x && i <= x + max->len && j > y && j <= y + max->len)
+                    write (1, &symbol[0], 1);
+	    else
+           	 write (1, &map[i][j], 1);
             j += 1;
         }
 		i += 1;
+		write (1, "\n", 1);
 	}
 }
 
