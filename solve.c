@@ -1,116 +1,74 @@
 #include "bsq.h"
 
-int check_obstale(char **map, t_squr *check, char *sep, t_obstale *max_corner)
+int check_dp(int **dp, int i, int j)
 {
-	if (check->posX > max_corner->posX - 1 || check->posY > max_corner->posY - 1)
-		return (1);
-    if (map[check->posX][check->posY] != 0)
-    {
-        	if (map[check->posX][check->posY] != sep[1])
-            		return (0);
-    }
-    return (1);
+    int min;
+
+    if (i == 0 || j == 0)
+        return (0);
+    min = dp[i][j - 1];
+    if (min > dp[i - 1][j])
+        min = dp[i - 1][j];
+    if (min > dp[i - 1][j - 1])
+        min = dp[i- 1][j - 1];
+    return (min);
 }
 
-int check_squr(char **map, t_squr *squr, char *sep, t_obstale *max_corner)
+int **init_dp(char **map, int size)
 {
-    int valid;
-    int len;
-    int posX;
-    int posY;
-    t_squr  *check;
+    int     i;
+    int     j;
+    int     **dp;
 
-    valid = 1;
-    len = squr->len;
-    posX = squr->posX;
-    posY = squr->posY;
-    while (len)
+    i = 0;
+    dp = (int **) malloc ( size * sizeof(int *));
+    while (map[i])
     {
-        check = set_squr(posX + len, posY + squr->len, 0);
-        if (check_obstale(map, check, sep, max_corner))
-            return (0);
-        len -= 1;
-    }
-    len = squr->len;
-    while (len)
-    {
-        check = set_squr(posX + squr->len, posY + len, 0);
-        if (check_obstale(map, check, sep, max_corner))
-            return (0);
-        len -= 1;
-    }
-    return (valid);
-}
-
-int get_square(char **map, t_squr *start_pos, char *sep, t_obstale *max_corner)
-{
-    int     ans;
-    int     len;
-    int     valid;
-    t_squr  *check;
-
-    ans = 0;
-    len = -1;
-    valid = 1;
-
-    while (valid)
-    {
-        len = ans + 1;
-	int test = len;
-        while (len >= 0 && valid)
+        j = 0;
+        dp[i] = (int *) malloc (ft_strlen(map[i]) * sizeof (int));
+        while (map[i][j])
         {
-            check = set_squr(start_pos->posX, start_pos->posY, len);
-            if (!(check_squr(map, check ,sep, max_corner)))
-                valid = 0;
-            len -= 1;
+            dp[i][j] = 0;
+            j += 1;
         }
-        if (valid)
-            ans = test;
+        i += 1;
     }
-    return (ans);
+    return (dp);
 }
 
-t_squr    *find_squr(char **map, t_obstale *list, char *sep, t_obstale *max_corner)
+void    free_dp(int **dp, int size)
 {
-    t_squr *max;
-    int len;
-    int posX;
-    int posY;
-    t_squr *check;
+    int i;
 
-    max = set_squr(0, 0, 0);
-    posX = list->posX;
-    posY = list->posY;
-    check = set_squr(posX + 1, posY, 0);
-    len = get_square(map, check, sep, max_corner);
-    if (len > max->len)
-        max = set_squr(posX + 1, posY, len);
-    check = set_squr(posX + 1, posY + 1, 0);
-    len = get_square(map, check, sep, max_corner);
-    if (len > max->len)
-        max = set_squr(posX + 1, posY + 1, len);
-    check = set_squr(posX, posY + 1, 0);
-    len = get_square(map, check, sep, max_corner);
-    if (len > max->len)
-        max = set_squr(posX, posY + 1, len);
-    return (max);
-}
-
-t_squr    *ft_start(char **map, t_obstale *list, char *sep)
-{
-    t_squr *max;
-    t_squr *cur_max;
-    t_obstale   *max_corner;
-
-    max_corner = list;
-    list = list->next;
-    max = set_squr(0, 0, 0);
-    while (list)
+    i = -1;
+    while (++i < size)
     {
-        cur_max = find_squr(map, list, sep, max_corner);
-        if ((cur_max->len) >= (max->len))
-            max = set_squr(cur_max->posX, cur_max->posY, cur_max->len);
-        list = list->next;
+        free (dp[i]);
     }
-    return  (max);
+    free (dp);
+}
+
+t_squr  *ft_dp(char **map, int size_y, char *sep)
+{
+    int     i;
+    int     j;
+    int     **dp;
+    t_squr  *max;
+
+    i = -1;
+    max = set_squr(max, 0, 0, 0);
+    dp = init_dp(map, size_y + 1);
+    while (map[++i])
+    {
+        j = -1;
+        while (map[i][++j])
+        {
+            if (map[i][j] != sep[1])
+                dp[i][j] = (check_dp(dp, i, j) + 1);
+            if (max->len < dp[i][j])
+                max = set_squr(max, i, j, dp[i][j]);
+        }
+    }
+    free_dp(dp, size_y);
+    return (max);
 }

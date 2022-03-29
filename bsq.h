@@ -29,12 +29,15 @@ void        print_map(char **map, t_squr *max, char *symbol);
 int         check_symbol(char *line, char *symbol, char c, int *x);
 char	    *ft_getline(int fd, char *symbol);
 int	        get_symbol(int fd, char *symbol);
-int	        fill_map(char **map, int size_y, int fd, char *symbol);
+int	        fill_map(char **map, int  , int fd, char *symbol);
 char	    **get_map(char **map, int fd, char *symbol);
 //init
-t_squr      *set_squr(int posX, int posY, int len);
+t_squr      *set_squr(t_squr *max, int posX, int posY, int len);
 t_obstale   *find_obstale(char **map, char *symbol);
+int         check_dp(int **dp, int i, int j);
 //solve
+t_squr      *ft_dp(char **map, int size_y, char *sep);
+//solve_bk
 int         check_obstale(char **map, t_squr *check, char *sep, t_obstale *max_corner);
 t_squr      *find_squr(char **map, t_obstale *list, char *sep, t_obstale *max_corner);
 int         get_square(char **map, t_squr *start_pos, char *sep, t_obstale *max_corner);

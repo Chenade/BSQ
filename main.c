@@ -17,7 +17,7 @@ int	process(char **map, int fd)
 		return (0);
 	}
     list = find_obstale(map, symbol);
-	max = ft_start(map, list, symbol);
+	max = ft_dp(map, 10, symbol);
 	print_map(map, max, symbol);
 	return (1);
 }
@@ -29,8 +29,8 @@ void print_map(char **map, t_squr *max, char *symbol)
     int x;
     int y;
 
-    x = max->posX;
-    y = max->posY;
+    x = max->posX - max->len;
+    y = max->posY - max->len;
 	i = 1;
 	while(map[i])
 	{

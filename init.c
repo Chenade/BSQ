@@ -1,9 +1,8 @@
 #include "bsq.h"
 
-t_squr    *set_squr(int posX, int posY, int len)
+t_squr    *set_squr(t_squr *max, int posX, int posY, int len)
 {
-    t_squr    *max;
-
+    free (max);
     max = malloc(sizeof(t_squr));
     if (max)
     {
