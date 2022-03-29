@@ -30,7 +30,7 @@ int         check_symbol(char *line, char *symbol, char c, int *x);
 char	    *ft_getline(int fd, char *symbol);
 int	        get_symbol(int fd, char *symbol);
 int	        fill_map(char **map, int size_y, int fd, char *symbol);
-char	    **get_map(char **map, int fd, char *symbol);
+char	   **get_map(char **map, int fd, char *symbol, int *size_y);
 //init
 t_squr      *set_squr(int posX, int posY, int len);
 t_obstale   *find_obstale(char **map, char *symbol);

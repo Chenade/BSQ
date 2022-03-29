@@ -4,19 +4,20 @@ int	process(char **map, int fd)
 {
 	t_obstale *list;
     t_squr  *max;
-	char	symbol[4];
+	int	size_y;
+    	char	symbol[4];
 	char	*line;
 
 	list = NULL;
-	map = get_map(map, fd, symbol);
-	if (!map)
+	map = get_map(map, fd, symbol, &size_y);
+	if (!size_y)
 		return (0);
 	line = ft_getline(fd, NULL);
 	if (line && ft_strlen(line) != 0)
 	{
 		return (0);
 	}
-    list = find_obstale(map, symbol);
+	list = find_obstale(map, symbol);
 	max = ft_start(map, list, symbol);
 	print_map(map, max, symbol);
 	return (1);

@@ -1,5 +1,5 @@
 #include "bsq.h"
-
+/*
 int check_symbol(char *line, char *symbol, char c, int *x)
 {
 	if (!(in_charset(symbol, c)))
@@ -10,7 +10,7 @@ int check_symbol(char *line, char *symbol, char c, int *x)
 		*x = 1;
 	}
 	return (1);
-}
+}*/
 
 char	*ft_getline(int fd, char *symbol)
 {
@@ -30,7 +30,7 @@ char	*ft_getline(int fd, char *symbol)
 		}
 		if (symbol)
 		{
-			if (!(check_symbol(line, symbol, c[0], &x)))
+			if (!(in_charset(symbol, c[0])))
 				return (NULL);
 		}
 		line[x++] = c[0];
@@ -57,7 +57,7 @@ int	get_symbol(int fd, char *symbol)
 	symbol[i] = 0;
 	return (ft_atoi(line));
 }
-
+/*
 int	fill_map(char **map, int size_y, int fd, char *symbol)
 {
 	int i;
@@ -77,30 +77,32 @@ int	fill_map(char **map, int size_y, int fd, char *symbol)
 	}
 		return (1);
 }
-
-char	**get_map(char **map, int fd, char *symbol)
+*/
+char	**get_map(char **map, int fd, char *symbol, int *size_y)
 {
 	int	i;
-	int	size_y;
 	int	size_x;
 	char	*line;
 
 	i = -1;
-	size_y = get_symbol(fd, symbol) + 1;
-	if (size_y < 2)
+	*size_y = get_symbol(fd, symbol);
+	printf("size ---------------%d\n", *size_y);
+	if (*size_y < 2)
 		return (NULL);
-	map = (char **) malloc (sizeof (char *) * (size_y + 1));
+	map = (char **) malloc (sizeof (char *) * (*size_y + 1));
 	line = ft_getline(fd, symbol);
-	size_x = ft_strlen(line) + 1;
-	while (++i < size_y)
+	printf("line : %s\n", line);
+	size_x = ft_strlen(line);
+	printf("size -==============%d\n", size_x);
+	while (++i < *size_y)
+	{
 		map[i] = (char *)malloc(size_x + 1);
+		ft_strcpy(map[i], line);
+		printf("\nmap[%d]  :  %s\n", i, line);
+		line = ft_getline(fd, symbol);
+		if (!line && ft_strlen(line) != size_x)
+			return (NULL);
+	}
 	map[i] = NULL;
-	i = -1;
-	while (++i < size_x - 1)
-		map[0][i] = symbol[1];
-	map[0][i] = 0;
-	ft_strcpy(map[1], line);
-	if (!fill_map(map, size_y, fd, symbol))
-		return (NULL);
 	return (map);
 }
