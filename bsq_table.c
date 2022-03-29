@@ -92,7 +92,6 @@ char	**get_map(char **map, int fd, char *symbol)
 	map = (char **) malloc (sizeof (char *) * (size_y + 1));
 	line = ft_getline(fd, symbol);
 	size_x = ft_strlen(line) + 1;
-	printf("\nsize_x : %d\n", size_x);
 	while (++i < size_y)
 		map[i] = (char *)malloc(size_x + 1);
 	map[i] = NULL;
