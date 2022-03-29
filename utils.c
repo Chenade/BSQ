@@ -3,10 +3,9 @@
 int	ft_strlen(char *str)
 {
 	int	ans;
-
 	ans = 0;
-	while (*str++)
-		ans += 1;
+	while (str[ans])
+		ans ++;
 	return (ans);
 }
 

@@ -2,9 +2,13 @@
 
 int check_obstale(char **map, int posX, int posY, char *sep)
 {
-    if (map[posX][posY])
-        if (map[posX][posY] != sep[1])
-            return (0);
+	if (posX > 9 || posY > 27)
+		return (1);
+    if (map[posX][posY] != 0)
+    {
+        	if (map[posX][posY] != sep[1])
+            		return (0);
+    }
     return (1);
 }
 
@@ -45,9 +49,11 @@ int get_square(char **map, int posX, int posY, char *sep)
     ans = 0;
     len = -1;
     valid = 1;
+
     while (valid)
     {
-        len += 1;
+        len = ans + 1;
+	int test = len;
         while (len >= 0 && valid)
         {
             check = set_squr(posX, posY, len);
@@ -56,7 +62,7 @@ int get_square(char **map, int posX, int posY, char *sep)
             len -= 1;
         }
         if (valid)
-            ans = len;
+            ans = test;
     }
     return (ans);
 }
@@ -88,7 +94,7 @@ t_squr    *ft_start(char **map, t_obstale *list, char *sep)
     t_squr *max;
     t_squr *cur_max;
 
-    max = NULL;
+    max = set_squr(0, 0, 0);
     while (list)
     {
         cur_max = find_squr(map, list, sep);
