@@ -3,20 +3,28 @@
 
 // int main()
 // {
-//     char buf[1];
-//     //read the first line
-//     while(read(0, buf, sizeof(buf))>0) {
-//         if (buf[0] == 10)
-//             break ;
-//     }
-//     //read input
-//     int i = 9;
-//     while (i)
-//     {
-//         while(read(0, buf, sizeof(buf))>0) {
-//             if (buf[0] == 10)
-//                 break ;
-//         }
-//         i -= 1;
-//     }
+//     char buf[10];
+//     int ret;
+//     static char	line[1024];
+// 	char		c[1];
+// 	int		x;
+// 	int		i;
+
+// 	x = 0;
+// 	while (1)
+// 	{
+// 		i = read(0, c, 1);
+// 		if (i == 0 || c[0] == 10)
+// 		{
+// 			line[x] = 0;
+// 			break ;
+// 		}
+// 		// if (symbol)
+// 		// {
+// 		// 	if (!(check_symbol(line, symbol, c[0], &x)))
+// 		// 		return (NULL);
+// 		// }
+// 		line[x++] = c[0];
+// 	}
+// 	printf ("%s", line);
 // }

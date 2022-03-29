@@ -46,6 +46,7 @@ void print_map(char **map, t_squr *max, char *symbol)
 		i += 1;
 		write (1, "\n", 1);
 	}
+	write (1, "\n", 1);
 }
 
 int main(int argc, char *argv[])
@@ -71,7 +72,11 @@ int main(int argc, char *argv[])
 			i++;
 		}
 	}
-	// else
-		//standard input
+	else
+	{
+		res = process(map, 0);
+		if (!res)
+			write(1, "map error\n", 10);
+	}
 	return (0);
 }
