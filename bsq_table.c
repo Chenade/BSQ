@@ -86,19 +86,19 @@ char	**get_map(char **map, int fd, char *symbol, int *size_y)
 
 	i = -1;
 	*size_y = get_symbol(fd, symbol);
-	printf("size ---------------%d\n", *size_y);
+	// printf("size ---------------%d\n", *size_y);
 	if (*size_y < 2)
 		return (NULL);
 	map = (char **) malloc (sizeof (char *) * (*size_y + 1));
 	line = ft_getline(fd, symbol);
-	printf("line : %s\n", line);
+	// printf("line : %s\n", line);
 	size_x = ft_strlen(line);
-	printf("size -==============%d\n", size_x);
+	// printf("size -==============%d\n", size_x);
 	while (++i < *size_y)
 	{
 		map[i] = (char *)malloc(size_x + 1);
 		ft_strcpy(map[i], line);
-		printf("\nmap[%d]  :  %s\n", i, line);
+		// printf("\nmap[%d]  :  %s\n", i, line);
 		line = ft_getline(fd, symbol);
 		if (!line && ft_strlen(line) != size_x)
 			return (NULL);
