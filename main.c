@@ -46,6 +46,7 @@ void print_map(char **map, t_squr *max, char *symbol)
 		i += 1;
 		write (1, "\n", 1);
 	}
+	write (1, "\n", 1);
 }
 
 int main(int argc, char *argv[])
@@ -56,22 +57,21 @@ int main(int argc, char *argv[])
 	char	**map;
 
 	i = 1;
-	if (argc > 1)
+	while (1)
 	{
-		while (i < argc)
+		if (argc == 1)
+			fd = 0;
+		else
+			fd = open (argv[i++], O_RDONLY, 0);
+		if (fd >= 0)
 		{
-			fd = open (argv[i], O_RDONLY, 0);
-			if (fd > 0)
-			{
-				res = process(map, fd);
-				if (!res)
-					write(1, "map error\n", 10);
-				close (fd);
-			}
-			i++;
+			res = process(map, fd);
+			if (!res)
+				write(1, "map error\n", 10);
+			close (fd);
 		}
+		if (--argc <= 1)
+			break ;
 	}
-	// else
-		//standard input
 	return (0);
 }

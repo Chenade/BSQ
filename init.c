@@ -48,5 +48,6 @@ t_obstale *find_obstale(char **map, char *symbol)
         }
         i += 1;
     }
+    list = add_link(list, i, j);
     return (list);
 }

@@ -1,23 +1,24 @@
 #include "bsq.h"
 
-int check_obstale(char **map, int posX, int posY, char *sep)
+int check_obstale(char **map, t_squr *check, char *sep, t_obstale *max_corner)
 {
-	if (posX > 9 || posY > 27)
+	if (check->posX > max_corner->posX - 1 || check->posY > max_corner->posY - 1)
 		return (1);
-    if (map[posX][posY] != 0)
+    if (map[check->posX][check->posY] != 0)
     {
-        	if (map[posX][posY] != sep[1])
+        	if (map[check->posX][check->posY] != sep[1])
             		return (0);
     }
     return (1);
 }
 
-int check_squr(char **map, t_squr *squr, char *sep)
+int check_squr(char **map, t_squr *squr, char *sep, t_obstale *max_corner)
 {
     int valid;
     int len;
     int posX;
     int posY;
+    t_squr  *check;
 
     valid = 1;
     len = squr->len;
@@ -25,21 +26,23 @@ int check_squr(char **map, t_squr *squr, char *sep)
     posY = squr->posY;
     while (len)
     {
-        if (check_obstale(map, posX + len, posY + squr->len, sep))
+        check = set_squr(posX + len, posY + squr->len, 0);
+        if (check_obstale(map, check, sep, max_corner))
             return (0);
         len -= 1;
     }
     len = squr->len;
     while (len)
     {
-        if (check_obstale(map, posX + squr->len, posY + len, sep))
+        check = set_squr(posX + squr->len, posY + len, 0);
+        if (check_obstale(map, check, sep, max_corner))
             return (0);
         len -= 1;
     }
     return (valid);
 }
 
-int get_square(char **map, int posX, int posY, char *sep)
+int get_square(char **map, t_squr *start_pos, char *sep, t_obstale *max_corner)
 {
     int     ans;
     int     len;
@@ -56,8 +59,8 @@ int get_square(char **map, int posX, int posY, char *sep)
 	int test = len;
         while (len >= 0 && valid)
         {
-            check = set_squr(posX, posY, len);
-            if (!(check_squr(map, check ,sep)))
+            check = set_squr(start_pos->posX, start_pos->posY, len);
+            if (!(check_squr(map, check ,sep, max_corner)))
                 valid = 0;
             len -= 1;
         }
@@ -67,23 +70,27 @@ int get_square(char **map, int posX, int posY, char *sep)
     return (ans);
 }
 
-t_squr    *find_squr(char **map, t_obstale *list, char *sep)
+t_squr    *find_squr(char **map, t_obstale *list, char *sep, t_obstale *max_corner)
 {
     t_squr *max;
     int len;
     int posX;
     int posY;
+    t_squr *check;
 
     max = set_squr(0, 0, 0);
     posX = list->posX;
     posY = list->posY;
-    len = get_square(map, posX + 1, posY + 1, sep);
-    if (len > max->len)
-        max = set_squr(posX + 1, posY + 1, len);
-    len = get_square(map, posX + 1, posY, sep);
+    check = set_squr(posX + 1, posY, 0);
+    len = get_square(map, check, sep, max_corner);
     if (len > max->len)
         max = set_squr(posX + 1, posY, len);
-    len = get_square(map, posX, posY + 1, sep);
+    check = set_squr(posX + 1, posY + 1, 0);
+    len = get_square(map, check, sep, max_corner);
+    if (len > max->len)
+        max = set_squr(posX + 1, posY + 1, len);
+    check = set_squr(posX, posY + 1, 0);
+    len = get_square(map, check, sep, max_corner);
     if (len > max->len)
         max = set_squr(posX, posY + 1, len);
     return (max);
@@ -93,11 +100,14 @@ t_squr    *ft_start(char **map, t_obstale *list, char *sep)
 {
     t_squr *max;
     t_squr *cur_max;
+    t_obstale   *max_corner;
 
+    max_corner = list;
+    list = list->next;
     max = set_squr(0, 0, 0);
     while (list)
     {
-        cur_max = find_squr(map, list, sep);
+        cur_max = find_squr(map, list, sep, max_corner);
         if ((cur_max->len) >= (max->len))
             max = set_squr(cur_max->posX, cur_max->posY, cur_max->len);
         list = list->next;
